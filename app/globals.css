@@ -1,15 +1,17 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --bg-main: #f1f5f9;
+  --bg-main: #fefce8;
   --bg-card: #ffffff;
-  --text-main: #0f172a;
-  --border: #e2e8f0;
+  --text-main: #713f12;
+  --border: #fde68a;
 }
 
 .dark {
-  --bg-main: #020617;
-  --bg-card: #0f172a;
-  --text-main: #f8fafc;
-  --border: #1e293b;
+  --bg-main: #1c1404;
+  --bg-card: #2d1f06;
+  --text-main: #fef08a;
+  --border: #713f12;
 }
