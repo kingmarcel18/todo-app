@@ -44,7 +44,7 @@ export default async function TodosPage({
               </svg>
             </div>
             <div>
-              <h1 className="text-xl font-bold tracking-tight leading-none" style={{ color: 'var(--text-main)' }}>TodoApp</h1>
+              <h1 className="text-xl font-bold tracking-tight leading-none" style={{ color: 'var(--text-main)' }}>King marcel</h1>
               <p className="text-slate-500 text-xs mt-0.5">{user?.email}</p>
             </div>
           </div>
