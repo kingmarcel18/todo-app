@@ -6,6 +6,7 @@ import { createClient } from '@/lib/supabase/server'
 export async function addTodo(formData: FormData) {
   const supabase = await createClient()
   const title = formData.get('title') as string
+  const due_date = formData.get('due_date') as string | null
 
   if (!title?.trim()) return
 
@@ -16,6 +17,7 @@ export async function addTodo(formData: FormData) {
     title: title.trim(),
     user_id: user.id,
     is_completed: false,
+    due_date: due_date || null,
   })
 
   revalidatePath('/todos')
@@ -23,12 +25,19 @@ export async function addTodo(formData: FormData) {
 
 export async function toggleTodo(id: string, isCompleted: boolean) {
   const supabase = await createClient()
-
   await supabase
     .from('todos')
     .update({ is_completed: !isCompleted })
     .eq('id', id)
+  revalidatePath('/todos')
+}
 
+export async function editTodo(id: string, title: string, due_date: string | null) {
+  const supabase = await createClient()
+  await supabase
+    .from('todos')
+    .update({ title: title.trim(), due_date: due_date || null })
+    .eq('id', id)
   revalidatePath('/todos')
 }
 
@@ -40,15 +49,12 @@ export async function deleteTodo(id: string) {
 
 export async function clearCompleted() {
   const supabase = await createClient()
-
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return
-
   await supabase
     .from('todos')
     .delete()
     .eq('user_id', user.id)
     .eq('is_completed', true)
-
   revalidatePath('/todos')
 }
